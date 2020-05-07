@@ -5,6 +5,8 @@ Created as an attempt to bog down the process to test the speed differences in w
 I found noticeable difference when running code in macOS, Windows and the Windows subsystem, I wanted to explore this \
 Performance was too good so needed to loop it, so I created maze_solver_finder.py for that
 
+
+Example is --seed 16723 --size 30
 ```
                             ↓
 ← ↓ ← ← → ↓ ↓ ← ↓ ← + ← + + ← ← ↑ ← ↑ → ↑ → ↑ + ↓ ← ← → ↑ →
