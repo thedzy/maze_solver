@@ -27,6 +27,8 @@ import time
 
 def main():
 
+    print('Rules: Follow the arrows. Pluses can go any direction.')
+
     # Initialise counters
     counter_tried = 0
     counter_found = 0
