@@ -137,6 +137,12 @@ def main():
                 if options.debug:
                     exit()
 
+                if options.single:
+                    break
+        else:
+            continue
+        break
+
     # Print options used
     print('Tested sizes from {} to {} and seeds {} to {}'.format(options.size[0], options.size[1],
                                                                  options.seed[0], options.seed[1]))
@@ -233,6 +239,11 @@ if __name__ == '__main__':
     length.add_argument('--long',
                         action='store_false', dest='short', default=None,
                         help='Return only the longest paths'
+                             '\nDefault: %(default)s')
+
+    parser.add_argument('--single',
+                        action='store_true', dest='single', default=False,
+                        help='Stop after the first puzzle is found'
                              '\nDefault: %(default)s')
 
     # Testing and debugging
