@@ -196,7 +196,7 @@ def get_path(x, y, maze, used_coordinates, path, found_path):
             if direction == 4 or direction == 0:
                 get_path(x, y - 1, maze, used_coordinates.copy(), path.copy(), found_path)
 
-            if x == end_position - 1 and y == int(end_position / 2) - 1:
+            if x == end_position - 1 and y == int(end_position / 2):
                 found_path.append(path)
                 return
 

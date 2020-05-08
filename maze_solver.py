@@ -163,7 +163,7 @@ def get_path(x, y, maze, used_coordinates, path, found_path):
                 get_path(x, y - 1, maze, used_coordinates.copy(), path.copy(), found_path)
 
             # If at the end
-            if x == end_position - 1 and y == int(end_position / 2) - 1:
+            if x == end_position - 1 and y == int(end_position / 2):
                 found_path.append(path)
                 return
 
