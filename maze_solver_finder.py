@@ -79,12 +79,12 @@ def main():
                     maze.append(row)
 
                 # Make sure the start and the exit as feasible directions
-                maze[0][start_end - 1] = random.choice([0, 2, 3, 4])
-                maze[size - 1][start_end - 1] = 3
+                maze[0][start_end] = random.choice([0, 2, 3, 4])
+                maze[size - 1][start_end] = 3
 
             # Get the paths
             paths = []
-            get_path(0, start_end - 1, maze, [], [], paths)
+            get_path(0, start_end, maze, [], [], paths)
 
             # If a solution was found
             if len(paths) != 0:
@@ -105,7 +105,7 @@ def main():
                 # Print puzzle
                 print('Puzzle:', seed, ' ' * 40)
                 print('Size:', size)
-                print(' ' * ((start_end * 2) - 3), '↓')
+                print(' ' * ((start_end * 2) - 1), '↓')
                 for x in maze:
                     for y in x:
                         direction = '+'
@@ -115,11 +115,11 @@ def main():
                         direction = '←' if y == 4 else direction
                         print(direction, end=' ')
                     print()
-                print(' ' * ((start_end * 2) - 3), '↓')
+                print(' ' * ((start_end * 2) - 1), '↓')
 
                 # Print all the ways to go
                 print('Solution(s):')
-                print(' ' * ((start_end * 2) - 3), '↓')
+                print(' ' * ((start_end * 2) - 1), '↓')
                 for x in range(size):
                     for y in range(size):
                         direction = ' '
@@ -132,7 +132,7 @@ def main():
                             direction = '←' if value == 4 else direction
                         print(direction, end=' ')
                     print()
-                print(' ' * ((start_end * 2) - 3), '↓')
+                print(' ' * ((start_end * 2) - 1), '↓')
 
                 if options.debug:
                     exit()
