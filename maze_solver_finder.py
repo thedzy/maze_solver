@@ -83,11 +83,22 @@ def main():
                 maze[size - 1][start_end - 1] = 3
 
             # Get the paths
-            path = []
-            get_path(0, start_end - 1, maze, [], [], path)
+            paths = []
+            get_path(0, start_end - 1, maze, [], [], paths)
 
             # If a solution was found
-            if len(path) != 0:
+            if len(paths) != 0:
+                if options.short is None:
+                    # Combine and remove duplicates
+                    path = list(set(sum(paths, [])))
+                else:
+                    if options.short:
+                        # Find the shortest path
+                        path = min(paths, key=len)
+                    else:
+                        # Find the shortest path
+                        path = max(paths, key=len)
+
                 # Count found
                 counter_found += 1
 
@@ -112,13 +123,13 @@ def main():
                 for x in range(size):
                     for y in range(size):
                         direction = ' '
-                        for coordinate in path:
-                            if coordinate[0] == x and coordinate[1] == y:
-                                direction = '+' if coordinate[2] == 0 else direction
-                                direction = '↑' if coordinate[2] == 1 else direction
-                                direction = '→' if coordinate[2] == 2 else direction
-                                direction = '↓' if coordinate[2] == 3 else direction
-                                direction = '←' if coordinate[2] == 4 else direction
+                        if (x, y) in path:
+                            value = maze[x][y]
+                            direction = '+' if value == 0 else direction
+                            direction = '↑' if value == 1 else direction
+                            direction = '→' if value == 2 else direction
+                            direction = '↓' if value == 3 else direction
+                            direction = '←' if value == 4 else direction
                         print(direction, end=' ')
                     print()
                 print(' ' * ((start_end * 2) - 3), '↓')
@@ -166,7 +177,7 @@ def get_path(x, y, maze, used_coordinates, path, found_path):
             used_coordinates.append((x, y))
 
             # Add to the path we are following
-            path.append((x, y, maze[x][y]))
+            path.append((x, y))
 
             # Follow the direction of the arrow
             direction = maze[x][y]
@@ -180,7 +191,7 @@ def get_path(x, y, maze, used_coordinates, path, found_path):
                 get_path(x, y - 1, maze, used_coordinates.copy(), path.copy(), found_path)
 
             if x == end_position - 1 and y == int(end_position / 2) - 1:
-                found_path.extend(path)
+                found_path.append(path)
                 return
 
 
@@ -211,6 +222,17 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--seed-range', type=int,
                         action='store', dest='seed', default=[0, 320000], nargs=2,
                         help='Seed of the random range'
+                             '\nDefault: %(default)s')
+
+    length = parser.add_mutually_exclusive_group()
+    length.add_argument('--short',
+                        action='store_true', dest='short', default=None,
+                        help='Return only the shortest paths'
+                             '\nDefault: %(default)s')
+
+    length.add_argument('--long',
+                        action='store_false', dest='short', default=None,
+                        help='Return only the longest paths'
                              '\nDefault: %(default)s')
 
     # Testing and debugging

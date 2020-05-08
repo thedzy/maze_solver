@@ -87,32 +87,43 @@ def main():
     print(' ' * ((start_end * 2) - 3), '↓')
 
     # Get the path(s)
-    path = []
-    get_path(0, start_end - 1, maze, [], [], path, options.single)
+    paths = []
+    get_path(0, start_end - 1, maze, [], [], paths)
 
     # Display results
-    if len(path) == 0:
+    if len(paths) == 0:
         print('No path to end')
     else:
+        if options.short is None:
+            # Combine and remove duplicates
+            path = list(set(sum(paths, [])))
+        else:
+            if options.short:
+                # Find the shortest path
+                path = min(paths, key=len)
+            else:
+                # Find the shortest path
+                path = max(paths, key=len)
+
         # Print solution(s)
         print('Solution(s):')
         print(' ' * ((start_end * 2) - 3), '↓')
         for x in range(size):
             for y in range(size):
                 direction = ' '
-                for coordinate in path:
-                    if coordinate[0] == x and coordinate[1] == y:
-                        direction = '+' if coordinate[2] == 0 else direction
-                        direction = '↑' if coordinate[2] == 1 else direction
-                        direction = '→' if coordinate[2] == 2 else direction
-                        direction = '↓' if coordinate[2] == 3 else direction
-                        direction = '←' if coordinate[2] == 4 else direction
+                if (x, y) in path:
+                    value = maze[x][y]
+                    direction = '+' if value == 0 else direction
+                    direction = '↑' if value == 1 else direction
+                    direction = '→' if value == 2 else direction
+                    direction = '↓' if value == 3 else direction
+                    direction = '←' if value == 4 else direction
                 print(direction, end=' ')
             print()
         print(' ' * ((start_end * 2) - 3), '↓')
 
 
-def get_path(x, y, maze, used_coordinates, path, found_path, single=True):
+def get_path(x, y, maze, used_coordinates, path, found_path):
     """
     Get paths from beginning to end
     Recursive
@@ -122,7 +133,6 @@ def get_path(x, y, maze, used_coordinates, path, found_path, single=True):
     :param used_coordinates: (list)(tuples) Coordinates that have already been traced so we avoid loops
     :param path: (list)(tuples) Temporary buffer to store the paths being tried
     :param found_path: (list)(tuples) Validated positions
-    :param single: (bool) Return only one path
     :return: (void)
     """
     end_position = len(maze)
@@ -139,24 +149,22 @@ def get_path(x, y, maze, used_coordinates, path, found_path, single=True):
             used_coordinates.append((x, y))
 
             # Add to the path we are following
-            path.append((x, y, maze[x][y]))
+            path.append((x, y))
 
             # Follow the direction of the arrow
             direction = maze[x][y]
             if direction == 1 or direction == 0:
-                get_path(x - 1, y, maze, used_coordinates.copy(), path.copy(), found_path, single)
+                get_path(x - 1, y, maze, used_coordinates.copy(), path.copy(), found_path)
             if direction == 2 or direction == 0:
-                get_path(x, y + 1, maze, used_coordinates.copy(), path.copy(), found_path, single)
+                get_path(x, y + 1, maze, used_coordinates.copy(), path.copy(), found_path)
             if direction == 3 or direction == 0:
-                get_path(x + 1, y, maze, used_coordinates.copy(), path.copy(), found_path, single)
+                get_path(x + 1, y, maze, used_coordinates.copy(), path.copy(), found_path)
             if direction == 4 or direction == 0:
-                get_path(x, y - 1, maze, used_coordinates.copy(), path.copy(), found_path, single)
+                get_path(x, y - 1, maze, used_coordinates.copy(), path.copy(), found_path)
 
             # If at the end
             if x == end_position - 1 and y == int(end_position / 2) - 1:
-                if single:
-                    found_path.clear()
-                found_path.extend(path)
+                found_path.append(path)
                 return
 
 
@@ -189,9 +197,15 @@ if __name__ == '__main__':
                         help='Seed the random to set reproducible results'
                              '\nDefault: %(default)s')
 
-    parser.add_argument('--single',
-                        action='store_true', dest='single', default=False,
-                        help='Return only one path'
+    length = parser.add_mutually_exclusive_group()
+    length.add_argument('--short',
+                        action='store_true', dest='short', default=None,
+                        help='Return only the shortest path'
+                             '\nDefault: %(default)s')
+
+    length.add_argument('--long',
+                        action='store_false', dest='short', default=None,
+                        help='Return only the longest path'
                              '\nDefault: %(default)s')
 
     # Testing and debugging
