@@ -79,7 +79,7 @@ Solution(s):
 ### maze_solver.py
 Create a maze and solve it or use maze_solver_finder to get a maze
 
-You can use a custom the size of the maze or the seed used to ranndomly generate it
+You can use a custom the size of the maze or the seed used to randomly generate it
 
 ```bash
 usage: maze_solver.py [-h] [-d SIZE] [-s SEED] [--single] [--debug]
@@ -126,7 +126,7 @@ optional arguments:
 
 
 ## Why?
-I was trying to find why the Windows python was so much slower and looking for a potentionally tasking process and throught a maze solver might do the trick.  I was very incorrect.  So I created a maze_solver_finder.py that will create 1000s of mazes and solve them for a bigger time delta.  
+I was trying to find why the Windows python was so much slower and looking for a potentially tasking process and through a maze solver might do the trick.  I was very incorrect.  So I created a maze_solver_finder.py that will create 1000s of mazes and solve them for a bigger time delta.  
 
 End result was unimpressive.  Might be string related methods.  Expect to see more.
 
@@ -135,4 +135,4 @@ End result was unimpressive.  Might be string related methods.  Expect to see mo
 Multitasking?  I don't think it can run too much faster though.
 
 ## State?
-Testinng and working. No know bugs.
+Tested and working. No know bugs.
