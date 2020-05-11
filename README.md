@@ -83,7 +83,7 @@ Create a maze and solve it or use maze_solver_finder to get a maze
 You can use a custom the size of the maze or the seed used to randomly generate it
 
 ```bash
-usage: maze_solver.py [-h] [-d SIZE] [-s SEED] [--single] [--debug]
+usage: maze_solver.py [-h] [-d SIZE] [-s SEED] [--short | --long] [--debug]
 
 Create a maze and solve it
 
@@ -96,9 +96,11 @@ optional arguments:
     -s SEED, --seed SEED
             Seed the random to set reproducible results
             Default: None
-    --single
-            Return only one path
-            Default: False
+    --short
+            Return only the shortest path
+            Default: None
+    --long  Return only the longest path
+            Default: None
     --debug
             Debug the program
             Default: False
@@ -106,7 +108,7 @@ optional arguments:
 
 ### maze_solver_finder.py
 ```bash
-usage: maze_solver_finder.py [-h] [-d SIZE SIZE] [-s SEED SEED] [--debug]
+usage: maze_solver_finder.py [-h] [-d SIZE SIZE] [-s SEED SEED] [--short | --long] [--single] [--debug]
 
 Create a batch of mazes, solve and display the solvable ones.
 
@@ -119,6 +121,14 @@ optional arguments:
     -s SEED SEED, --seed-range SEED SEED
             Seed of the random range
             Default: [0, 320000]
+    --short
+            Return only the shortest paths
+            Default: None
+    --long  Return only the longest paths
+            Default: None
+    --single
+            Stop after the first puzzle is found
+            Default: False
     --debug
             Debug the program
             Default: False
