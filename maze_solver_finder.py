@@ -154,7 +154,7 @@ def main():
     runtime = (time.time() - start_time)
     minutes, seconds = divmod(runtime, 60)
     hours, minutes = divmod(minutes, 60)
-    print('Total runtime for all puzzle attempts: {0:02.0f}h{1:02.0f}m{2:06.3f}s'.format(hours, minutes, seconds))
+    print('Total runtime for all puzzle attempts: {0:02.0f}h {1:02.0f}m {2:06.3f}s'.format(hours, minutes, seconds))
 
     print('Average time per puzzle: {0:0.3f}ms per puzzle'.format((runtime / counter_tried) * 1000))
 
